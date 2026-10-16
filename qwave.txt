@@ -1,0 +1,115 @@
+QWAVE — ARCHITECTURE & SYSTEM DESIGN
+====================================
+WebKit-native macOS browser | Swift 5.10 | macOS 14.0+
+
+1. Container Isolation
+----------------------
+               ┌───────────────────────────────────────────────┐
+               │                  Qwave.app                    │
+               │                                               │
+ profile A ───▶│ WKWebsiteDataStore(.persistent)  cookies,     │
+               │   └─ tabs A1…An                localStorage,  │
+               │                              IndexedDB,       │
+ profile B ───▶│ WKWebsiteDataStore(.persistent)  service      │
+               │   └─ tabs B1…Bm                 workers       │
+               │                              ─────────────    │
+ burner tab ──▶│ WKWebsiteDataStore(.nonPersistent)            │
+               │   └─ closed ⇒ gone, never restored           │
+               └───────────────────────────────────────────────┘
+
+2. Shields Pipeline
+-------------------
+ blocklist.json ──(committed snapshot, scripts/update-blocklist.sh)──┐
+      │                                                              │
+      ▼                                                              │
+ UBOFilterParser ──▶ UBORuleListCompiler ──▶ WKContentRuleList       │
+      │                                          │                   │
+      ▼                                          ▼                   │
+ per-site toggles ◀── ShieldsDirector ◀── applyListsThen(to:)        │
+      │                                          │                   │
+      ▼                                          ▼                   │
+ HTTPSFirstUpgrader                NavigationCoordinator gates the   │
+                                   first navigation on shields       │
+                                   .whenReady() — never bypassed ────┘
+
+3. Energy Governor & Hibernation
+--------------------------------
+ thermal .nominal ─┐
+ lowPower off ─────┼──▶ tier .normal   ──▶ tabs alive, AI allowed
+ occlusion false ──┘
+                      underMemoryPressure ──▶ tier .conserve / .critical
+                                                      │
+                                                      ▼
+                                     hibernate background tabs,
+                                     pause/suspend media,
+                                     quietly defer AI inference
+
+4. Summarize (On-device AI)
+---------------------------
+ ⌥⌘S / toolbar ──▶ available?  macOS 26 + Apple Silicon + Apple Intelligence
+        │              │
+        │              ├─ modelNotReady ──▶ re-check on foreground (self-heals)
+        │              └─ otherwise ─────▶ vanish cleanly, no grey-out, no nag
+        ▼
+ energy tier == .normal? ── no ──▶ quietly absent this moment
+        │ yes
+        ▼
+ extractor.js (F1 1.00 ×4, 0.96 docs) ──▶ LanguageModelSession.respond
+        │                                     respond-only: the stream path
+        │                                     refuses this workload on 26.4
+        │                                     retry ≤ 3 on nondeterministic
+        ▼                                     refusals; neutral failure text
+ inert selectable text panel ◀── nothing downstream of the model acts;
+                                 zero network egress
+
+5. VPN & Post-Quantum Path
+--------------------------
+ Qwave.app ──▶ Mullvad relay discovery ──▶ WireGuard handshake
+      │                                        │
+      └── PSK via ML-KEM-768 KEM ──────────────┘
+          (FIPS 203; fails closed: no PQ-negotiated PSK ⇒ no tunnel)
+
+ PacketTunnel.systemextension  (Network Extension, WireGuardKit)
+
+6. MemoryWave
+-------------
+ page text ─▶ ArticleExtractor ─▶ MEM8 store (container-scoped, encrypted)
+      ▲                                    │
+      └──────── MemoryProviding ◀──────────┘
+               default: NullMemoryProvider  (no inference configured)
+               optional: OpenAI-compatible  (explicit HTTPS endpoint only)
+
+7. Egress Audit
+---------------
+ any wired Qwave network client
+      │
+      ▼
+ EgressGuard (URLProtocol) ── checks EgressAllowlist.permits(host:)
+      │                        allowed → steps aside, request proceeds
+      │                        blocked → fails the request, logs, records
+      ▼
+ allowlisted hosts (4): github.com          Sparkle appcast
+                        api.mullvad.net     VPN control API
+                        api.x.ai            default remote AI endpoint
+                        duckduckgo.com      omnibox suggestions (opt-in)
+      │
+      ▼
+ launch path ── EgressGuardTests URLProtocol recorder ──▶ zero requests
+                (no launch-time blocklist fetch since 0.4.4)
+
+8. App Architecture (Module Dependency Graph)
+---------------------------------------------
+Qwave.app                         AppKit shell + SwiftUI settings
+├── QwaveKit                      local Swift package, Swift 6 language mode
+│   ├── BrowserCore                tabs, containers, navigation, hibernation
+│   ├── Shields                    content rules and HTTPS-First
+│   ├── Persistence                actor-isolated SQLite stores
+│   ├── MemoryWave                 encrypted MEM8 memory substrate
+│   ├── VPNKit                     Mullvad relay selection, WireGuard config
+│   ├── PostQuantum                ML-KEM-768 key encapsulation
+│   ├── WebExtensions              MV3 background pages and popups
+│   ├── URLIdentity                canonical host parsing
+│   ├── FeatureFlags               SPI reflection
+│   └── QwaveSupport               Logging, keychain, egress allowlist
+├── PacketTunnel.systemextension  WireGuardKit Network Extension
+└── Resources                     Entitlements, Info.plists, built-in rules
