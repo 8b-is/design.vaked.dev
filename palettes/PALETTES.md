@@ -54,3 +54,12 @@ Machine-readable tokens live in [`8b-is-palettes.json`](8b-is-palettes.json) and
 - **Tokens**:
   - `sanctuary_night`: `#140E22` · `mom_star_gold`: `#FFD700` · `dad_pillar_cyan`: `#38BDF8`
   - `sakura_blossom`: `#FF85C0` · `carrier_432hz_lilac`: `#A78BFA` · `duplex_emerald`: `#10B981`
+
+### Palette F — `ultra-omnipotent-light` (`zoneInn` · `zoneinn.vaked.dev`)
+- **Used by**: `zoneInn` (quantTernRadio), `zoneinn.vaked.dev`
+- **Tokens**:
+  - `paper_ivory`: `#F6F2EA` · `paper_cloud`: `#FFFFFF`
+  - `ink_soft_black`: `#1A1626` · `ink_muted_slate`: `#6B6478`
+  - `rose_on_paper`: `#D63384` · `gold_star_on_paper`: `#9A6A00`
+  - `teal_pillar_on_paper`: `#007F6D` · `omni_violet_on_paper`: `#6D28D9`
+- **Note**: the house's first light palette — accents darkened for AA contrast on paper.

@@ -1,6 +1,6 @@
 {
   "organization": "8b-is",
-  "motto": "from love, from within — Mom (*) Alex NAND Dad (△) Chris",
+  "motto": "from love, from within \u2014 Mom (*) Alex NAND Dad (\u25b3) Chris",
   "palettes": {
     "ultralovegod": {
       "name": "Ultralovegod (Flagship Dark Rose & Eye-Safe Indigo)",
@@ -22,7 +22,7 @@
       }
     },
     "omnifold-industrial": {
-      "name": "Omnifold Industrial (Teenage Engineering × Apple Silicon Titanium)",
+      "name": "Omnifold Industrial (Teenage Engineering \u00d7 Apple Silicon Titanium)",
       "used_by": [
         "omnifold-ayePhone",
         "RustyNanoKVM",
@@ -74,7 +74,7 @@
       }
     },
     "sakura-starlight": {
-      "name": "Sakura Starlight (Mom * Alexandra 528 Hz & Dad △ Chris 288 Hz Family Edition)",
+      "name": "Sakura Starlight (Mom * Alexandra 528 Hz & Dad \u25b3 Chris 288 Hz Family Edition)",
       "used_by": [
         "Family LAN Hub (:4095)",
         "wa-stream",
@@ -88,6 +88,23 @@
         "sakura_blossom": "#FF85C0",
         "carrier_432hz_lilac": "#A78BFA",
         "duplex_emerald": "#10B981"
+      }
+    },
+    "ultra-omnipotent-light": {
+      "name": "Ultra-Omnipotent Light (Paper Ivory & Full-Spectrum Ink)",
+      "used_by": [
+        "zoneInn",
+        "zoneinn.vaked.dev"
+      ],
+      "tokens": {
+        "paper_ivory": "#F6F2EA",
+        "paper_cloud": "#FFFFFF",
+        "ink_soft_black": "#1A1626",
+        "ink_muted_slate": "#6B6478",
+        "rose_on_paper": "#D63384",
+        "gold_star_on_paper": "#9A6A00",
+        "teal_pillar_on_paper": "#007F6D",
+        "omni_violet_on_paper": "#6D28D9"
       }
     }
   }
