@@ -296,10 +296,19 @@ function toggleEmblemLayer(layerId, btn) {
 }
 
 function switchBlueprint(bpId, btn) {
-  document.querySelectorAll('.bp-panel').forEach((p) => {
+  document.querySelectorAll('#blueprints .bp-panel').forEach((p) => {
     p.classList.toggle('hidden', p.id !== bpId);
   });
   document.querySelectorAll('[data-bp-btn]').forEach((b) => {
+    b.classList.toggle('active', b === btn);
+  });
+}
+
+function switchPDTab(pdId, btn) {
+  document.querySelectorAll('#product-design .bp-panel').forEach((p) => {
+    p.classList.toggle('hidden', p.id !== pdId);
+  });
+  document.querySelectorAll('[data-pd-btn]').forEach((b) => {
     b.classList.toggle('active', b === btn);
   });
 }
@@ -373,6 +382,7 @@ window.__setDensity = setDensity;
 window.__setExportFormat = setExportFormat;
 window.__toggleEmblemLayer = toggleEmblemLayer;
 window.__switchBlueprint = switchBlueprint;
+window.__switchPDTab = switchPDTab;
 window.__copyExport = () => {
   const codeEl = document.getElementById('token-export-code');
   if (codeEl) copyText(codeEl.textContent, `${activePalette} (${activeFormat.toUpperCase()})`);

@@ -11,8 +11,8 @@ The sovereign visual language, interactive design token studio, 16-logo vector g
 
 | File / Directory | Purpose |
 |---|---|
-| [`index.html`](index.html) | Interactive `ULTRA-CREATE` Design Studio: live `432 Hz × 528 Hz × 288 Hz` wave canvas, interactive `8b-is` emblem layer inspector, 5-palette switcher with View Transitions, `@container style(--density)` layout reactivity, multi-language token exporter (`CSS`, `Rust`, `SwiftUI`, `Ghostty`, `JSON`), 12-product logo gallery, and 4 system architecture blueprints |
-| [`main.js`](main.js) | Zero-dependency reactive palette engine, View Transitions controller, token compiler, and harmonic wave canvas |
+| [`index.html`](index.html) | Interactive `ULTRA-CREATE` Design Studio: live `432 Hz × 528 Hz × 288 Hz` wave canvas, interactive `8b-is` emblem layer inspector, 5-palette switcher with View Transitions, `@container style(--density)` layout reactivity, multi-language token exporter (`CSS`, `Rust`, `SwiftUI`, `Ghostty`, `JSON`), 12-product logo gallery, 5 system architecture blueprints, and **Section 05 (`/product-design` Studio — `MLX-QUANT × qWave ~-> 8b-is <3 love Mom* 'n Dad<>`)** |
+| [`main.js`](main.js) | Zero-dependency reactive palette engine, View Transitions controller, token compiler, `/product-design` tab switcher (`switchPDTab`), and harmonic wave canvas |
 | [`palettes/`](palettes/) | [`8b-is-palettes.json`](palettes/8b-is-palettes.json), [`8b-is-tokens.css`](palettes/8b-is-tokens.css), and [`PALETTES.md`](palettes/PALETTES.md) |
 | [`logos/org/`](logos/org/) | Master `8b-is` GitHub Organization vector SVGs (`8b-is-avatar.svg`, `8b-is-wordmark-dark.svg`, `8b-is-wordmark-light.svg`, `8b-is-monochrome.svg`) + `512×512` PNG avatar |
 | [`logos/products/`](logos/products/) | 12 flagship product vector SVGs (`svg/*.svg`) + cropped high-res icon PNGs (`png/*.png`) |
